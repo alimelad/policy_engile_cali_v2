@@ -1,6 +1,0 @@
-- name: Personal exemption.
-  period: 2021
-  input:
-    state_code: VA
-  output:
-    va_personal_exemption_person: 930

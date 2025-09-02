@@ -1,1 +1,0 @@
-# Affordable Care Act

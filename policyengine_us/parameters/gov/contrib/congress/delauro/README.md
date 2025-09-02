@@ -1,1 +1,0 @@
-# Rep Rosa DeLauro

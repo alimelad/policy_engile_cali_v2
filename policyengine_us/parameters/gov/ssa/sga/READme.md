@@ -1,1 +1,0 @@
-# Substantial Gainful Activity
