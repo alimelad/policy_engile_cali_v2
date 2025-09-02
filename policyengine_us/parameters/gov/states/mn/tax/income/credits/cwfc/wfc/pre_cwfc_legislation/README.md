@@ -1,1 +1,0 @@
-# Working Families Tax Credit computation pre 2023 Child and Working Families Tax Credit creation

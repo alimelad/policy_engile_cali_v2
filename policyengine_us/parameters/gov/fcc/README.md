@@ -1,1 +1,0 @@
-# Federal Communications Commission (FCC)
