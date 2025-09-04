@@ -1,0 +1,7 @@
+agi: adjusted_gross_income
+wages: employment_income
+hh_size: household_size
+weight: household_weight
+fed_tax: income_tax
+state_tax: ca_income_tax
+filing_status: filing_status
