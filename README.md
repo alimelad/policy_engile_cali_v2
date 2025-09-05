@@ -7,3 +7,5 @@
 PolicyEngine US is a microsimulation model of the US state and federal tax and benefit system.
 
 To install, run `pip install policyengine-us`.
+
+The california specefic changes are in the notebooks folder, just run from 00-04, skip 05 and run 06. There are detailed markdowns for each of them. 
