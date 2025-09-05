@@ -4,13 +4,16 @@ import numpy as np
 import pandas as pd
 
 # ----------------------------
-# Verbatim constants
+#  constants
 # ----------------------------
 ALLOW_SINGLE  = {1:14580, 2:19720, 3:24860, 4:30000, 5:35140, 6:40280, 7:45420}
 ALLOW_MARRIED = {2:29160, 3:34300, 4:39440, 5:44580, 6:49720, 7:54860}
 
-THRESHOLDS  = dict(single=75_000.0, mfj=150_000.0)
-PHASE_RANGE = dict(single=50_000.0, mfj=100_000.0)
+THRESHOLDS  = {"single": 50_000.0, "mfj": 100_000.0}
+PHASE_RANGE = {"single": 50_000.0, "mfj": 100_000.0}
+
+assert THRESHOLDS["single"] + PHASE_RANGE["single"] == 100_000.0
+assert THRESHOLDS["mfj"]    + PHASE_RANGE["mfj"]    == 200_000.0
 
 # ----------------------------
 # Flexible column detection
