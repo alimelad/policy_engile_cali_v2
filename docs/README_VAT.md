@@ -1,6 +1,6 @@
 # California VAT Rebate — 2024 Results (Household-level)
 
-Scope: California households, calendar year 2024. We build a household panel from PolicyEngine’s household entity, exclude negative-AGI households, calibrate household weights to ACS/DOF (2023) by status × size, scale to 14.8 million households (2024), and group by equivalized income (AGI / household size). “Married Households” means MFJ-only, inferred from household spouse presence and Head-of-Household flags; “Single Households” covers all others (Single, MFS, HOH, Widow/er).
+Scope: California households, calendar year 2024. We build a household panel from PolicyEngine’s household entity, exclude negative-AGI households, apply a uniform 11% downward deflator to household weights (Step 01), and group by equivalized income (AGI / household size). “Married Households” means MFJ-only, inferred from household spouse presence and Head-of-Household flags; “Single Households” covers all others (Single, MFS, HOH, Widow/er).
 
 ## Policy Scenario
 
@@ -24,12 +24,12 @@ For household size n (capped at 7) and status S ∈ {Single, MFJ}:
 ## Key 2024 Results
 
 - Rebate totals:  
-  No phase-out: $414,467,634,066  
-  With phase-out: $286,098,319,800  
-  Reduction from phase-out: $128,369,314,266
+  No phase-out: $391,504,607,385  
+  With phase-out: $283,828,897,363  
+  Reduction from phase-out: $107,675,710,022
 
 - Rebate-only MTR (+$1 wages experiment):  
-  Population-weighted: 0.0810  
+  Population-weighted: 0.0754  
   Earnings-weighted: 0.1017
 
 - Share of wages in phase-out bands:  
@@ -54,6 +54,9 @@ For household size n (capped at 7) and status S ∈ {Single, MFJ}:
 
 - Entity = household throughout; we exclude AGI < 0 households.  
 - MFJ vs Single derived from household spouse presence (has_spouse / spouse_present / head_spouse_count) and HOH eligibility; we treat MFJ-only as “Married.”  
-- We calibrate household weights to ACS/DOF 2023 by status × size buckets, then scale to 14.8M total households for 2024.  
+- Household weights are uniformly deflated by 11% in Step 01 to align overall size with external controls.  
 - Grouping = equivalized income (AGI / household size) for deciles; includes Top 5% and Top 1% by the weighted distribution.  
-- Phase-out bands sourced centrally from code (vat_rebate.py) and echoed here via Step 03 outputs.
+- Phase-out bands are defined centrally in code (vat_rebate.py) and echoed here via Step 03 outputs.
+
+Weighting note: Step 01 applied a uniform deflator of 0.89
+to household weights (total 16,215,270 → 14,431,592).
