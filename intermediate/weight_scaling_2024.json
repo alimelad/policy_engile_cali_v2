@@ -1,0 +1,8 @@
+{
+  "year": 2024,
+  "pre_calibration_total": 16215270.0,
+  "post_2023_bucket_total": 12630000.062635463,
+  "target_2024_total": 14800000.0,
+  "scale_factor_2024": 1.1718131374982534,
+  "notes": "Weights calibrated to 2023 ACS/DOF by status\u00d7size buckets using provided counts (thousands), then uniformly scaled to 2024 target total households."
+}

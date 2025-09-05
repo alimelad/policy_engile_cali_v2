@@ -1,2 +1,2 @@
-year,share_wages_single_75k_125k,share_wages_mfj_150k_200k
-2024,0.0463404423034759,0.09907776149299795
+year,single_band_label,mfj_band_label,share_wages_single_in_band,share_wages_mfj_in_band
+2024,"50,000–100,000","100,000–200,000",0.05164423394819054,0.21720949836920525
