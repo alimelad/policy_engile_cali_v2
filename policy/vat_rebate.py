@@ -2,7 +2,7 @@
 from __future__ import annotations
 import numpy as np
 import pandas as pd
-
+from typing import Callable, Dict
 # ----------------------------
 #  constants
 # ----------------------------
@@ -223,3 +223,68 @@ def rebate_mtr_plus_one(df: pd.DataFrame, wages_col: str | None = None):
     d_rebate = cf["rebate_after_phaseout"] - base["rebate_after_phaseout"]
     weighted = float((d_rebate * base["household_weight"]).sum())
     return d_rebate, weighted
+
+# --- 010 helpers ---
+
+def wmean(series, weight):
+    s = series.astype(float); w = weight.astype(float)
+    tot = w.sum()
+    return float((s * w).sum() / tot) if tot != 0 else float("nan")
+
+def compute_after_tax_income(df: pd.DataFrame,
+                             agi_col="household_agi",
+                             fed_col="fed_income_tax",
+                             state_col="ca_income_tax") -> pd.Series:
+    # fed/state tax columns are NET of credits in our panel
+    return df[agi_col].astype(float) - (df[fed_col].astype(float) + df[state_col].astype(float))
+
+def mtr_plus_one_baseline(
+    df: pd.DataFrame,
+    compute_taxes_fn: Callable[[pd.DataFrame], pd.DataFrame],
+    bump_on="employment_income",
+    bump_amount=1.0,
+    agi_col="household_agi",
+    fed_col="fed_income_tax",
+    state_col="ca_income_tax",
+    weight_col="household_weight",
+) -> pd.DataFrame:
+    # Prepare base and bumped copies
+    base = df.copy()
+    base["__tax_base__"] = base[fed_col].astype(float) + base[state_col].astype(float)
+
+    bump = base.copy()
+    mask = bump[bump_on].astype(float) > 0
+    bump.loc[mask, bump_on] = bump.loc[mask, bump_on].astype(float) + bump_amount
+    bump.loc[mask, agi_col]  = bump.loc[mask, agi_col].astype(float)  + bump_amount
+
+    # Recompute taxes on bumped DF 
+    bumped_taxes = compute_taxes_fn(bump)  # must return fed_col, state_col aligned row-for-row
+    for c in (fed_col, state_col):
+        if c not in bumped_taxes.columns:
+            raise KeyError(f"compute_taxes_fn must return '{c}'")
+    bump[fed_col]  = bumped_taxes[fed_col].astype(float)
+    bump[state_col] = bumped_taxes[state_col].astype(float)
+    bump["__tax_bump__"] = bump[fed_col] + bump[state_col]
+
+    out = base.copy()
+    out["mtr_delta_tax"] = bump["__tax_bump__"].astype(float) - base["__tax_base__"].astype(float)
+    return out
+
+def decile_table(
+    df: pd.DataFrame,
+    group_col: str,
+    cols: Dict[str, str],
+    weight_col="household_weight",
+) -> pd.DataFrame:
+    rows = []
+    for g, sub in df.groupby(group_col, sort=True):
+        w = sub[weight_col].astype(float)
+        row = {group_col: g, "pop_weight": float(w.sum())}
+        for out_name, src in cols.items():
+            s = sub[src].astype(float)
+            if out_name.startswith("mean_"):
+                row[out_name] = wmean(s, w)
+            elif out_name.startswith("total_"):
+                row[out_name] = float((s * w).sum())
+        rows.append(row)
+    return pd.DataFrame(rows)

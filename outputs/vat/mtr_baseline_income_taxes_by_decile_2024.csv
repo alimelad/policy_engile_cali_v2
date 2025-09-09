@@ -1,0 +1,12 @@
+year,group,mtr_population_weighted,note
+2024,decile_1,-0.15818495302714938,baseline_income_tax_exact
+2024,decile_2,0.012222057130366998,baseline_income_tax_exact
+2024,decile_3,0.08286869470076419,baseline_income_tax_exact
+2024,decile_4,0.005626982140364892,baseline_income_tax_exact
+2024,decile_5,0.054254914978859384,baseline_income_tax_exact
+2024,decile_6,0.0005280206169683936,baseline_income_tax_exact
+2024,decile_7,0.0015669106703764743,baseline_income_tax_exact
+2024,decile_8,0.0010705665382839942,baseline_income_tax_exact
+2024,decile_9,-4.536934922452447e-06,baseline_income_tax_exact
+2024,decile_10,0.0002388277244969735,baseline_income_tax_exact
+2024,all,-0.002338682231072654,baseline_income_tax_exact
